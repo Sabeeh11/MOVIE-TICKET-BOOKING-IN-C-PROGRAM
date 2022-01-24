@@ -1,0 +1,179 @@
+//source code for movie ticket booking program in c
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+struct book
+{
+	char code[20];
+	char name[20];
+	char date[20];
+	int cost;
+
+
+}b;
+int seat =60;
+void insert_details();//for inserting movie details
+void viewAll(); // for view all data
+void book_ticket(); //for booking tickets
+void cancel_ticket();
+void main()
+{
+
+	 int ch;
+ 	do{
+	printf("\n====================================================================");
+	printf("\n");
+	printf("\t Moive Ticket booking ");
+	printf("\n");
+	printf("\n====================================================================");
+
+	printf("\nPress <1> Insert Movie");
+   	printf("\nPress <2> View All Movie");
+	printf("\nPress <3> book Ticket ");
+	printf("\nPress <4> cancel Ticket);
+   	printf("\nPress <0> Exit ");
+
+   	printf("\nEnter your Choice ::");
+   	scanf("%d",&ch);
+
+   	switch (ch)
+   	{
+    	case 1 :
+    		insert_details();
+   		break;
+		case 2:
+    		viewAll();
+   		break;
+
+		case 3:
+		book_ticket();
+		break;
+		case 4 :
+		cancel_ticket();
+		break;
+		case 0:
+    		exit(0);
+    		break;
+
+    		default:
+    		printf("Wrong choice !");
+    		break;
+   	}
+ 	    
+ 	}while(ch!=0);
+}
+void insert_details()
+{
+
+	FILE *fp;
+	struct book b;
+	printf("Enter  name :- ");
+	scanf("%s",b.name);
+	printf("Enter Release Date:- ");
+	scanf("%s",b.date);
+	printf("Enter Ticket Price:- ");
+	scanf("%d",&b.cost);
+
+	fp=fopen("data.txt","a");
+
+	if(fp == NULL)
+	{
+		printf("FIle not Found");
+	}
+	else
+	{
+		fprintf(fp," %s %s %d \n",b.name,b.date,b.cost);
+		printf("Record insert Sucessfull");
+	}
+		printf("\n");
+	fclose(fp);
+}
+void viewAll()
+{
+	char ch;
+	FILE *fp;
+
+	fp = fopen("data.txt","r");
+	if(fp == NULL)
+	{
+		printf("file does not found !");
+		exit(1);
+
+	}
+	else
+	{
+		system("clear");
+		while( ( ch = fgetc(fp) ) != EOF )
+      		printf("%c",ch);
+
+	}
+	fclose(fp);
+}
+void book_ticket()
+{
+ struct book b;
+	FILE *fp;
+	int total_seat,mobile,totalPrice;
+	char name[20];
+
+
+	char ch; //used in display all movies
+
+	fp = fopen("data.txt","r");
+	if(fp == NULL)
+	{
+		printf("file does not found !");
+		exit(1);
+
+	}
+	else
+	{
+		system("cls");
+		while( ( ch = fgetc(fp) ) != EOF )
+      		printf("%c",ch);
+
+	}
+	fclose(fp);
+
+	//display ends
+	char mname[200];
+	int cellnum;
+	printf("\n For Book ticket Choise Movie(Enter Movie Code First Latter Of Movie)\n");
+	printf("\n Enter movie name :");
+	scanf("%s",mname);
+	printf("\n* Fill Deatails  *");
+	printf("\n your name :");
+	scanf("%s",name);
+	printf("\n mobile number :");
+	scanf("%d",&cellnum);
+	printf("\n Total number of tickets :");
+	scanf("%d",&total_seat);
+
+
+	totalPrice = 250* total_seat;
+	int cost = 250;
+
+	printf("\n ***** ENJOY THE MOVIE ****\n");
+	printf("\n\t\tname : %s",name);
+	printf("\n\t\tmobile Number : %d",cellnum);
+	printf("\n\t\tmovie name : %s",mname);
+	printf("\n\t\tTotal Amount : %d",totalPrice);
+	printf("\n\t\tTotal seats : %d",total_seat);
+	printf("\n\t\tcost per ticket : %d",cost);
+
+	fclose(fp);
+
+}
+void cancel_ticket()
+{
+    
+    char sentPwd[100],reqPwd[100]="pwdrequired";
+    printf("\nenter password");
+    scanf("%s",sentPwd);
+    if(strcmp(sentPwd,reqPwd)==0){
+        printf("\ntickets successfully cancelled ");
+    }
+    else
+    printf("\nwrong password");
+    }
